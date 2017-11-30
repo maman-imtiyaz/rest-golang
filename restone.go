@@ -124,8 +124,8 @@ func MgoGetPeople(w http.ResponseWriter, r *http.Request) {
 	lib.Block{
 		Try: func() {
 			temp := []Person{}
-			session, _ := mgo.Dial("192.168.20.139")
-			c := session.DB("admiralty_training").C("training")
+			session, _ := mgo.Dial("localhost")
+			c := session.DB("db_training").C("training")
 			iter := c.Find(bson.M{}).Iter()
 
 			person := Person{}
@@ -153,8 +153,8 @@ func MgoGetPerson(w http.ResponseWriter, r *http.Request) {
 	lib.Block{
 		Try: func() {
 			temp := []Person{}
-			session, err := mgo.Dial("192.168.20.139")
-			c := session.DB("admiralty_training").C("training")
+			session, err := mgo.Dial("localhost")
+			c := session.DB("db_training").C("training")
 			iter := c.Find(bson.M{"id": params["id"]}).Iter()
 
 			if err != nil{
@@ -191,8 +191,8 @@ func MgoCreatePerson(w http.ResponseWriter, r *http.Request) {
 			person.Firstname = r.FormValue("firstname")
 			person.Lastname = r.FormValue("lastname")
 
-			session, err := mgo.Dial("192.168.20.139")
-			c := session.DB("admiralty_training").C("training")
+			session, err := mgo.Dial("localhost")
+			c := session.DB("db_training").C("training")
 			c.Insert(person)
 			session.Close()
 
@@ -220,8 +220,8 @@ func MgoDeletePerson(w http.ResponseWriter, r *http.Request) {
 	lib.Block{
 		Try: func() {
 			temp := []Person{}
-			session, err := mgo.Dial("192.168.20.139")
-			c := session.DB("admiralty_training").C("training")
+			session, err := mgo.Dial("localhost")
+			c := session.DB("db_training").C("training")
 			c.Remove(bson.M{"id": params["id"]})
 			iter := c.Find(nil).Iter()
 			session.Close()
